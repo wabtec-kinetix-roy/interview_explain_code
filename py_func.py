@@ -50,6 +50,7 @@ for full_file_path in im_files:
         
         mask = np.zeros((Y_DIM, X_DIM), dtype=bool)
         
+        # What happening inside below for loop? Any issues ?
         for field in field_names:
             mask_data = m[field].astype(bool)
             if mask_data.shape != (Y_DIM, X_DIM):
@@ -58,7 +59,7 @@ for full_file_path in im_files:
 
         mask = remove_small_objects(mask, min_size=50)  
 
-        final_mask = final_mask + (mask * ic)
+        final_mask = final_mask + (mask * ic) # What happening here? Any issues ?
 
     cmap = np.array([
                     [0 , 0, 0], 
@@ -79,7 +80,7 @@ for full_file_path in im_files:
     unique_colors = np.unique(rgb.reshape(-1, 3), axis=0)
     print("Unique colors in the image:", unique_colors.shape[0])
 
-    rgb_half = cv2.resize(rgb, (w//2, h//2), interpolation=cv2.INTER_LINEAR)  
+    rgb_half = cv2.resize(rgb, (w//2, h//2), interpolation=cv2.INTER_LINEAR)  # What happening here? Any issues ?
 
     output_path = os.path.join(OUT_IMAGE_DIR, f"{im_name}.png")																   
     
@@ -87,4 +88,3 @@ for full_file_path in im_files:
 
     unique_colors_half = np.unique(rgb_half.reshape(-1, 3), axis=0)
     print("Unique colors in the resized image:", unique_colors_half.shape[0])
-    #print("Number of unique colors in resized image:", unique_colors_half.shape[0])
