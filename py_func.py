@@ -76,8 +76,15 @@ for full_file_path in im_files:
     for i in range(len(components)):
         rgb[final_mask == (i+1)] = cmap[i+1]
     
-    rgb_half = cv2.resize(rgb, (w//2, h//2))  
+    unique_colors = np.unique(rgb.reshape(-1, 3), axis=0)
+    print("Unique colors in the image:", unique_colors.shape[0])
+
+    rgb_half = cv2.resize(rgb, (w//2, h//2), interpolation=cv2.INTER_LINEAR)  
 
     output_path = os.path.join(OUT_IMAGE_DIR, f"{im_name}.png")																   
     
     cv2.imwrite(output_path, cv2.cvtColor(rgb_half*255, cv2.COLOR_RGB2BGR))
+
+    unique_colors_half = np.unique(rgb_half.reshape(-1, 3), axis=0)
+    print("Unique colors in the resized image:", unique_colors_half.shape[0])
+    #print("Number of unique colors in resized image:", unique_colors_half.shape[0])
